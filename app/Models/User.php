@@ -33,6 +33,7 @@ class User extends Authenticatable implements FilamentUser
         'face_embedding',
         'image_url',
         'fcm_token',
+        'additional_data',
     ];
 
     /**
@@ -64,6 +65,7 @@ class User extends Authenticatable implements FilamentUser
             'image_url' => 'string',
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'additional_data' => 'array',
         ];
     }
 
@@ -145,5 +147,41 @@ class User extends Authenticatable implements FilamentUser
     public function canAccessPanel(Panel $panel): bool
     {
         return in_array($this->role, ['admin', 'manager'], true);
+    }
+
+    /**
+     * Get specific additional data by key
+     *
+     * @param string $key
+     * @param mixed $default
+     * @return mixed
+     */
+    public function getAdditionalData(string $key, $default = null)
+    {
+        return data_get($this->additional_data, $key, $default);
+    }
+
+    /**
+     * Set specific additional data by key
+     *
+     * @param string $key
+     * @param mixed $value
+     * @return void
+     */
+    public function setAdditionalData(string $key, $value): void
+    {
+        $data = $this->additional_data ?? [];
+        data_set($data, $key, $value);
+        $this->additional_data = $data;
+    }
+
+    /**
+     * Get all additional data or specific role's expected fields
+     *
+     * @return array
+     */
+    public function getAdditionalDataAttributes(): array
+    {
+        return $this->additional_data ?? [];
     }
 }

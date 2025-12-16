@@ -28,6 +28,7 @@ class UserResource extends JsonResource
             'image_url' => $this->image_url ? asset('storage/'.$this->image_url) : null,
             'face_embedding' => $this->face_embedding,
             'fcm_token' => $this->fcm_token,
+            'additional_data' => $this->additional_data ?? [],
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];
