@@ -57,6 +57,7 @@ class AuthController extends Controller
                 'id' => $user->departemen->id,
                 'name' => $user->departemen->name,
             ] : null,
+            'additional_data' => $user->additional_data ?? [],
         ];
 
         return response($response, 200);
@@ -139,6 +140,7 @@ class AuthController extends Controller
                 'id' => $user->departemen->id,
                 'name' => $user->departemen->name,
             ] : null,
+            'additional_data' => $user->additional_data ?? [],
         ];
 
         return response($response, 200);

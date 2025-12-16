@@ -7,12 +7,13 @@ Route::get('/user', function (Request $request) {
     $user = $request->user();
 
     // Load relationships
-    $user->load(['shiftKerja', 'departemen']);
+    $user->load(['shiftKerja', 'departemen', 'jabatan']);
 
     return response([
         'user' => $user,
         'role' => $user->role,
         'position' => $user->position,
+        'additional_data' => $user->additional_data ?? [],
         'default_shift' => $user->shiftKerja ? [
             'id' => $user->shiftKerja->id,
             'name' => $user->shiftKerja->name,
@@ -26,6 +27,10 @@ Route::get('/user', function (Request $request) {
         'department' => $user->departemen ? [
             'id' => $user->departemen->id,
             'name' => $user->departemen->name,
+        ] : null,
+        'jabatan' => $user->jabatan ? [
+            'id' => $user->jabatan->id,
+            'name' => $user->jabatan->name,
         ] : null,
     ], 200);
 })->middleware('auth:sanctum');
