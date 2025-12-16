@@ -12,15 +12,15 @@ class JabatanSeeder extends Seeder
     public function run(): void
     {
         $jabatans = [
-            ['name' => 'Direktur Utama', 'description' => 'Pemimpin tertinggi perusahaan'],
-            ['name' => 'Manajer IT', 'description' => 'Mengelola departemen teknologi informasi'],
-            ['name' => 'Senior Developer', 'description' => 'Pengembang senior aplikasi'],
-            ['name' => 'Junior Developer', 'description' => 'Pengembang junior aplikasi'],
-            ['name' => 'UI/UX Designer', 'description' => 'Desainer antarmuka dan pengalaman pengguna'],
-            ['name' => 'Project Manager', 'description' => 'Mengelola proyek-proyek perusahaan'],
-            ['name' => 'HR Manager', 'description' => 'Mengelola sumber daya manusia'],
-            ['name' => 'Marketing Manager', 'description' => 'Mengelola strategi pemasaran'],
-            ['name' => 'Sales Executive', 'description' => 'Eksekutif penjualan'],
+            ['name' => 'Kepala Sekolah', 'description' => 'Pemimpin tertinggi sekolah'],
+            ['name' => 'Wakil Kepala Sekolah', 'description' => 'Wakil kepala sekolah'],
+            ['name' => 'Guru Mata Pelajaran', 'description' => 'Guru pengajar mata pelajaran'],
+            ['name' => 'Guru BK', 'description' => 'Guru Bimbingan Konseling'],
+            ['name' => 'Kepala TU', 'description' => 'Kepala Tata Usaha'],
+            ['name' => 'Staff TU', 'description' => 'Staff Tata Usaha'],
+            ['name' => 'Staff Keuangan', 'description' => 'Mengelola keuangan sekolah'],
+            ['name' => 'Staff Perpustakaan', 'description' => 'Mengelola perpustakaan'],
+            ['name' => 'Staff IT', 'description' => 'Mengelola sistem teknologi informasi'],
             ['name' => 'Admin', 'description' => 'Administrator sistem'],
         ];
 

@@ -29,7 +29,7 @@ class AttendanceController extends Controller
         $onLeave = $this->isUserOnLeave($currentUser->id, $currentDateTime->toDateString());
         if ($onLeave) {
             return response([
-                'message' => 'You cannot check in while you are on approved leave',
+                'message' => 'Kamu tidak dapat melakukan check-in karena sedang dalam cuti.',
                 'leave_info' => $onLeave,
             ], 422);
         }
@@ -88,7 +88,7 @@ class AttendanceController extends Controller
         $attendance->save();
 
         return response([
-            'message' => 'Checkin success',
+            'message' => 'Berhasil check-in.',
             'attendance' => $attendance,
         ], 200);
     }
@@ -109,7 +109,7 @@ class AttendanceController extends Controller
         $onLeave = $this->isUserOnLeave($currentUser->id, $today->toDateString());
         if ($onLeave) {
             return response([
-                'message' => 'You cannot check out while you are on approved leave',
+                'message' => 'Kamu tidak dapat melakukan checkout karena sedang dalam cuti.',
                 'leave_info' => $onLeave,
             ], 422);
         }
@@ -120,7 +120,7 @@ class AttendanceController extends Controller
 
         // check if attendance not found
         if (! $attendance) {
-            return response(['message' => 'Checkin first'], 400);
+            return response(['message' => 'Harap lakukan check-in terlebih dahulu'], 400);
         }
 
         // save checkout
@@ -129,7 +129,7 @@ class AttendanceController extends Controller
         $attendance->save();
 
         return response([
-            'message' => 'Checkout success',
+            'message' => 'Berhasil check-out.',
             'attendance' => $attendance,
         ], 200);
     }

@@ -23,11 +23,11 @@ class OvertimeResource extends Resource
 
     protected static ?string $modelLabel = 'Lembur';
 
-    protected static ?string $pluralModelLabel = 'Lembur';
+    protected static ?string $pluralModelLabel = 'Manajemen Lembur';
 
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-clock';
 
-    protected static UnitEnum|string|null $navigationGroup = 'Dashboard Absensi';
+    protected static UnitEnum|string|null $navigationGroup = 'Manajemen Staff';
 
     protected static ?int $navigationSort = 33;
 

@@ -41,7 +41,7 @@ class PublicHolidaysTable
                         'info' => Holiday::TYPE_NATIONAL,
                         'warning' => Holiday::TYPE_COMPANY,
                     ])
-                    ->formatStateUsing(fn ($state) => $state === Holiday::TYPE_NATIONAL ? 'National' : 'Company')
+                    ->formatStateUsing(fn ($state) => $state === Holiday::TYPE_NATIONAL ? 'Libur Nasional' : 'Libur Sekolah')
                     ->sortable(),
 
                 IconColumn::make('is_official')
@@ -90,8 +90,8 @@ class PublicHolidaysTable
                 SelectFilter::make('type')
                     ->label('Type')
                     ->options([
-                        Holiday::TYPE_NATIONAL => 'National',
-                        Holiday::TYPE_COMPANY => 'Company',
+                        Holiday::TYPE_NATIONAL => 'Nasional/Libur Nasional',
+                        Holiday::TYPE_COMPANY => 'School',
                     ]),
 
                 SelectFilter::make('official_only')
@@ -123,7 +123,7 @@ class PublicHolidaysTable
                             ->maxLength(255)
                             ->placeholder('e.g., Independence Day'),
                     ])
-                    ->modalHeading('Quick Add National Holiday')
+                    ->modalHeading('Quick Add Libur Nasional')
                     ->action(function (array $data) {
                         Holiday::create([
                             'date' => $data['date'],

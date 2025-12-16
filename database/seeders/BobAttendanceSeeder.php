@@ -15,10 +15,10 @@ class BobAttendanceSeeder extends Seeder
      */
     public function run(): void
     {
-        $bob = User::where('email', 'bob@company.com')->first();
+        $bob = User::where('email', 'ahmad@sekolah.com')->first();
 
         if (! $bob) {
-            $this->command->warn('User bob@company.com not found');
+            $this->command->warn('User ahmad@sekolah.com not found');
 
             return;
         }

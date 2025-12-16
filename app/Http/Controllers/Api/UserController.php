@@ -14,7 +14,7 @@ class UserController extends Controller
         $user = User::find($id);
         return response([
             'status' => 'Success',
-            'message' => 'User found',
+            'message' => 'Data user berhasil diambil',
             'data' => $user
         ], 200);
     }
@@ -43,7 +43,7 @@ class UserController extends Controller
             $user->save();
             return response([
                 'status' => 'Success',
-                'message' => 'Update user success',
+                'message' => 'Profil user berhasil diperbarui',
                 'data' => $user,
             ], 200);
         } catch (\Throwable $th) {

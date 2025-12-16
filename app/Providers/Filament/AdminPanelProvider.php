@@ -29,9 +29,9 @@ class AdminPanelProvider extends PanelProvider
             ->registration()
             ->profile()
             ->login(\App\Filament\Pages\Auth\Login::class)
-            ->brandName('JagoHRIS')
-            ->brandLogo(asset('img/logo-jagohris.svg'))
-            ->darkModeBrandLogo(asset('img/logo-jagohris-dark.svg'))
+            ->brandName('Sekolahin')
+            ->brandLogo(asset('img/logo-Sekolahin.svg'))
+            ->darkModeBrandLogo(asset('img/logo-Sekolahin-dark.svg'))
             ->brandLogoHeight('2rem')
             ->favicon(asset('favicon.svg'))
             ->colors([

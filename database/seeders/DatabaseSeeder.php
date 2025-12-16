@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
             JabatanSeeder::class,
             ShiftKerjaSeeder::class,
             UserSeeder::class,
-            CompanySeeder::class,
+            SchoolSeeder::class,
 
             // Pivot table seeders - must run after the main tables are seeded
             DepartemenUserSeeder::class,

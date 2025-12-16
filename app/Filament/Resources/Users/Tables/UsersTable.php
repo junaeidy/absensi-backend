@@ -18,7 +18,7 @@ class UsersTable
         return $table
             ->columns([
                 ImageColumn::make('image_url')
-                    ->label('Avatar')
+                    ->label('Foto')
                     ->disk('public')
                     ->circular()
                     ->defaultImageUrl(fn () => 'data:image/svg+xml;base64,'.base64_encode('
@@ -30,6 +30,7 @@ class UsersTable
                     '))
                     ->size(50),
                 TextColumn::make('name')
+                    ->label('Nama')
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('email')
@@ -37,13 +38,18 @@ class UsersTable
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('phone')
+                    ->label('Telepon')
                     ->searchable(),
                 TextColumn::make('role')
                     ->badge()
+                    ->formatStateUsing(fn (string $state): string => ucwords(str_replace('_', ' ', $state)))
                     ->color(fn (string $state): string => match ($state) {
                         'admin' => 'danger',
-                        'manager' => 'warning',
-                        'employee' => 'success',
+                        'kepala_sekolah' => 'warning',
+                        'guru' => 'success',
+                        'staff_keuangan' => 'info',
+                        'staff_perpustakaan' => 'primary',
+                        'bk' => 'purple',
                         default => 'gray',
                     })
                     ->searchable(),
@@ -80,8 +86,11 @@ class UsersTable
                 SelectFilter::make('role')
                     ->options([
                         'admin' => 'Admin',
-                        'manager' => 'Manager',
-                        'employee' => 'Employee',
+                        'kepala_sekolah' => 'Kepala Sekolah',
+                        'guru' => 'Guru',
+                        'staff_keuangan' => 'Staff Keuangan',
+                        'staff_perpustakaan' => 'Staff Perpustakaan',
+                        'bk' => 'BK / Konselor',
                     ]),
                 SelectFilter::make('department')
                     ->options(function () {

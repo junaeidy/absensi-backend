@@ -21,8 +21,8 @@ class DashboardStatsWidget extends BaseWidget
     protected function getStats(): array
     {
         return [
-            Stat::make('Total Pegawai', User::count())
-                ->description('Jumlah seluruh pegawai')
+            Stat::make('Total Guru & Staff', User::count())
+                ->description('Jumlah seluruh guru dan staff')
                 ->descriptionIcon('heroicon-m-users')
                 ->color('primary'),
 
@@ -41,17 +41,17 @@ class DashboardStatsWidget extends BaseWidget
                 ->descriptionIcon('heroicon-m-clock')
                 ->color('warning'),
 
-            Stat::make('Overtime Approved', $this->getApprovedOvertimeThisMonth())
+            Stat::make('Lembur Disetujui', $this->getApprovedOvertimeThisMonth())
                 ->description('Bulan ini yang disetujui')
                 ->descriptionIcon('heroicon-m-plus-circle')
                 ->color('success'),
 
-            Stat::make('Leave Approved', $this->getApprovedLeaveThisMonth())
+            Stat::make('Cuti Disetujui', $this->getApprovedLeaveThisMonth())
                 ->description('Bulan ini yang disetujui')
                 ->descriptionIcon('heroicon-m-check-circle')
                 ->color('success'),
 
-            Stat::make('Complete Attendance', $this->getCompleteAttendanceThisMonth())
+            Stat::make('Absensi Lengkap', $this->getCompleteAttendanceThisMonth())
                 ->description('Check-in & check-out bulan ini')
                 ->descriptionIcon('heroicon-m-calendar-days')
                 ->color('primary'),

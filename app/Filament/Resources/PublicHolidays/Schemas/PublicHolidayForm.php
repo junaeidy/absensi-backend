@@ -17,10 +17,10 @@ class PublicHolidayForm
     {
         return $schema
             ->components([
-                Section::make('Holiday Information')
+                Section::make('Informasi Hari Libur')
                     ->schema([
                         DatePicker::make('date')
-                            ->label('Date')
+                            ->label('Tanggal Hari Libur')
                             ->required()
                             ->native(false)
                             ->unique(table: 'holidays', column: 'date', ignoreRecord: true)
@@ -31,25 +31,25 @@ class PublicHolidayForm
                             ]),
 
                         TextInput::make('name')
-                            ->label('Holiday Name')
+                            ->label('Nama Hari Libur')
                             ->required()
                             ->maxLength(255)
-                            ->placeholder('e.g., Independence Day, Eid al-Fitr'),
+                            ->placeholder('misalnya, Hari Kemerdekaan, Idul Fitri, Natal, dll.'),
 
                         Select::make('type')
-                            ->label('Type')
+                            ->label('Tipe Hari Libur')
                             ->required()
                             ->options([
-                                Holiday::TYPE_NATIONAL => 'National Holiday',
-                                Holiday::TYPE_COMPANY => 'Company Holiday',
+                                Holiday::TYPE_NATIONAL => 'Hari Libur Nasional',
+                                Holiday::TYPE_COMPANY => 'Hari Libur Sekolah',
                             ])
                             ->default(Holiday::TYPE_NATIONAL)
-                            ->helperText('National = government holidays, Company = company-specific holidays'),
+                            ->helperText('Pilih tipe hari libur: Nasional atau Sekolah'),
 
                         Toggle::make('is_official')
-                            ->label('Official Holiday')
+                            ->label('Hari Libur Resmi')
                             ->default(true)
-                            ->helperText('Mark as official government/company holiday'),
+                            ->helperText('Tandai sebagai hari libur resmi pemerintah/sekolah'),
                     ])
                     ->columns(2),
             ]);

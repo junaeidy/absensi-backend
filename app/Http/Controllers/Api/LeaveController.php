@@ -20,7 +20,7 @@ class LeaveController extends Controller
         $leaveTypes = LeaveType::all();
 
         return response()->json([
-            'message' => 'Leave types retrieved successfully',
+            'message' => 'Jenis cuti berhasil diambil',
             'data' => $leaveTypes,
         ], 200);
     }
@@ -37,7 +37,7 @@ class LeaveController extends Controller
             ->get();
 
         return response()->json([
-            'message' => 'Leave balance retrieved successfully',
+            'message' => 'Saldo cuti berhasil diambil',
             'data' => $balances,
         ], 200);
     }
@@ -58,7 +58,7 @@ class LeaveController extends Controller
         $leaves = $query->orderBy('created_at', 'desc')->get();
 
         return response()->json([
-            'message' => 'Leaves retrieved successfully',
+            'message' => 'Cuti berhasil diambil',
             'data' => LeaveResource::collection($leaves),
         ], 200);
     }
@@ -69,7 +69,7 @@ class LeaveController extends Controller
         $leave = Leave::with(['employee', 'leaveType', 'approver'])->findOrFail($id);
 
         return response()->json([
-            'message' => 'Leave retrieved successfully',
+            'message' => 'Cuti berhasil diambil',
             'data' => new LeaveResource($leave),
         ], 200);
     }
@@ -102,13 +102,13 @@ class LeaveController extends Controller
 
         if (! $leaveBalance) {
             return response()->json([
-                'message' => 'Leave balance not found for this leave type',
+                'message' => 'Jenis cuti tidak tersedia.',
             ], 400);
         }
 
         if ($leaveBalance->remaining_days < $totalDays) {
             return response()->json([
-                'message' => 'Insufficient leave balance',
+                'message' => 'Saldo cuti tidak mencukupi',
                 'remaining_days' => $leaveBalance->remaining_days,
                 'requested_days' => $totalDays,
             ], 400);
@@ -131,7 +131,7 @@ class LeaveController extends Controller
         $leave = Leave::create($validated);
 
         return response()->json([
-            'message' => 'Leave request created successfully',
+            'message' => 'Permohonan cuti berhasil dibuat',
             'data' => new LeaveResource($leave->load(['employee', 'leaveType'])),
         ], 201);
     }
@@ -144,7 +144,7 @@ class LeaveController extends Controller
         // Only allow update if status is pending
         if ($leave->status !== 'pending') {
             return response()->json([
-                'message' => 'Cannot update leave request that has been processed',
+                'message' => 'Tidak dapat memperbarui permohonan cuti yang telah diproses',
             ], 400);
         }
 
@@ -173,7 +173,7 @@ class LeaveController extends Controller
         $leave->update($validated);
 
         return response()->json([
-            'message' => 'Leave request updated successfully',
+            'message' => 'Permohonan cuti berhasil diperbarui',
             'data' => $leave->load(['employee', 'leaveType']),
         ], 200);
     }
@@ -186,7 +186,7 @@ class LeaveController extends Controller
         // Only allow cancel if status is pending
         if ($leave->status !== 'pending') {
             return response()->json([
-                'message' => 'Cannot cancel leave request that has been processed',
+                'message' => 'Tidak dapat membatalkan permohonan cuti yang telah diproses',
             ], 400);
         }
 
@@ -200,7 +200,7 @@ class LeaveController extends Controller
         $leave->update(['status' => 'cancelled']);
 
         return response()->json([
-            'message' => 'Leave request cancelled successfully',
+            'message' => 'Permohonan cuti berhasil dibatalkan',
             'data' => $leave,
         ], 200);
     }
@@ -214,7 +214,7 @@ class LeaveController extends Controller
 
             if ($leave->status !== 'pending') {
                 return response()->json([
-                    'message' => 'Leave request has already been processed',
+                    'message' => 'Permohonan cuti telah diproses',
                 ], 400);
             }
 
@@ -248,14 +248,14 @@ class LeaveController extends Controller
             DB::commit();
 
             return response()->json([
-                'message' => 'Leave request approved successfully',
+                'message' => 'Permohonan cuti berhasil disetujui',
                 'data' => $leave->load(['employee', 'leaveType', 'approver']),
             ]);
         } catch (\Exception $e) {
             DB::rollBack();
 
             return response()->json([
-                'message' => 'Failed to approve leave request',
+                'message' => 'Gagal menyetujui permohonan cuti',
                 'error' => $e->getMessage(),
             ], 500);
         }
@@ -271,7 +271,7 @@ class LeaveController extends Controller
 
         if ($leave->status !== 'pending') {
             return response()->json([
-                'message' => 'Leave request has already been processed',
+                'message' => 'Permohonan cuti telah diproses',
             ], 400);
         }
 
@@ -283,7 +283,7 @@ class LeaveController extends Controller
         ]);
 
         return response()->json([
-            'message' => 'Leave request rejected successfully',
+            'message' => 'Permohonan cuti berhasil ditolak',
             'data' => $leave->load(['employee', 'leaveType', 'approver']),
         ]);
     }

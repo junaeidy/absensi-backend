@@ -9,7 +9,7 @@ use Filament\Widgets\TableWidget as BaseWidget;
 
 class PendingOvertimeWidget extends BaseWidget
 {
-    protected static ?string $heading = 'Overtime Menunggu Persetujuan';
+    protected static ?string $heading = 'Lembur Menunggu Persetujuan';
 
     protected int|string|array $columnSpan = 'full';
 
@@ -24,7 +24,7 @@ class PendingOvertimeWidget extends BaseWidget
             )
             ->columns([
                 TextColumn::make('user.name')
-                    ->label('Karyawan')
+                    ->label('Guru/Staff')
                     ->searchable(),
 
                 TextColumn::make('date')

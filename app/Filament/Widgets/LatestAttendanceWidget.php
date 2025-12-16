@@ -25,7 +25,7 @@ class LatestAttendanceWidget extends BaseWidget
             )
             ->columns([
                 TextColumn::make('user.name')
-                    ->label('Nama Karyawan')
+                    ->label('Nama Guru/Staff')
                     ->searchable(),
 
                 TextColumn::make('user.position')

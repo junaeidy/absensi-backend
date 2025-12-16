@@ -43,7 +43,7 @@ class UserController extends Controller
             'department' => $request->department,
         ]);
 
-        return redirect()->route('users.index')->with('success', 'User created successfully');
+        return redirect()->route('users.index')->with('success', 'Guru/Staff berhasil ditambahkan');
     }
 
     //edit
@@ -76,13 +76,13 @@ class UserController extends Controller
             ]);
         }
 
-        return redirect()->route('users.index')->with('success', 'User updated successfully');
+        return redirect()->route('users.index')->with('success', 'Guru/Staff berhasil diperbarui.');
     }
 
     //destroy
     public function destroy(User $user)
     {
         $user->delete();
-        return redirect()->route('users.index')->with('success', 'User deleted successfully');
+        return redirect()->route('users.index')->with('success', 'Guru/Staff berhasil dihapus.');
     }
 }

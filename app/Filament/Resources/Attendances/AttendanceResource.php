@@ -4,6 +4,7 @@ namespace App\Filament\Resources\Attendances;
 
 use App\Filament\Resources\Attendances\Pages\EditAttendance;
 use App\Filament\Resources\Attendances\Pages\ListAttendances;
+use App\Filament\Resources\Attendances\Pages\ViewAttendance;
 use App\Filament\Resources\Attendances\Schemas\AttendanceForm;
 use App\Filament\Resources\Attendances\Tables\AttendancesTable;
 use App\Models\Attendance;
@@ -19,7 +20,13 @@ class AttendanceResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-clock';
 
-    protected static UnitEnum|string|null $navigationGroup = 'Dashboard Absensi';
+    protected static UnitEnum|string|null $navigationGroup = 'Manajemen Staff';
+    
+    protected static ?string $navigationLabel = 'Kehadiran Staff';
+
+    protected static ?string $modelLabel = 'Kehadiran';
+
+    protected static ?string $pluralModelLabel = 'Manajemen Kehadiran';
 
     protected static ?int $navigationSort = 30;
 
@@ -44,6 +51,7 @@ class AttendanceResource extends Resource
     {
         return [
             'index' => ListAttendances::route('/'),
+            'view' => ViewAttendance::route('/{record}'),
             'edit' => EditAttendance::route('/{record}/edit'),
         ];
     }

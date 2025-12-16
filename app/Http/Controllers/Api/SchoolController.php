@@ -4,14 +4,14 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Company;
+use App\Models\School;
 
-class CompanyController extends Controller
+class SchoolController extends Controller
 {
     //show
     public function show()
     {
-        $company = Company::find(1);
-        return response(['company' => $company], 200);
+        $school = School::first();
+        return response(['school' => $school], 200);
     }
 }

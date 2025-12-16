@@ -27,7 +27,7 @@ class OvertimeController extends Controller
             $onLeave = $this->isUserOnLeave($user->id, $today);
             if ($onLeave) {
                 return response()->json([
-                    'message' => 'You cannot start overtime while you are on approved leave',
+                    'message' => 'Kamu tidak dapat memulai lembur karena sedang dalam cuti.',
                     'leave_info' => $onLeave,
                 ], 422);
             }
@@ -127,7 +127,7 @@ class OvertimeController extends Controller
             $onLeave = $this->isUserOnLeave($user->id, $today);
             if ($onLeave) {
                 return response()->json([
-                    'message' => 'You cannot end overtime while you are on approved leave',
+                    'message' => 'Kamu tidak dapat menyelesaikan lembur karena sedang dalam cuti.',
                     'leave_info' => $onLeave,
                 ], 422);
             }
@@ -184,7 +184,7 @@ class OvertimeController extends Controller
             if ($onLeave) {
                 return response()->json([
                     'status' => 'on_leave',
-                    'message' => 'Cannot work overtime while on approved leave',
+                    'message' => 'Kamu tidak dapat lembur karena sedang dalam cuti.',
                     'leave_info' => $onLeave,
                     'data' => null,
                 ], 200);

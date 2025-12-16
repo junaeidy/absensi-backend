@@ -2,27 +2,27 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Company;
+use App\Models\School;
 use Illuminate\Http\Request;
 
-class CompanyController extends Controller
+class SchoolController extends Controller
 {
     //show
     public function show($id)
     {
-        $company = Company::find(1);
-        return view('pages.company.show', compact('company'));
+        $school = School::find(1);
+        return view('pages.school.show', compact('school'));
     }
 
     //edit
     public function edit($id)
     {
-        $company = Company::find($id);
-        return view('pages.company.edit', compact('company'));
+        $school = School::find($id);
+        return view('pages.school.edit', compact('school'));
     }
 
     //update
-    public function update(Request $request, Company $company)
+    public function update(Request $request, School $school)
     {
         $request->validate([
             'name' => 'required',
@@ -36,7 +36,7 @@ class CompanyController extends Controller
             'attendance_type' => 'required',
         ]);
 
-        $company->update([
+        $school->update([
             'name' => $request->name,
             'email' => $request->email,
             'address' => $request->address,
@@ -48,6 +48,6 @@ class CompanyController extends Controller
             'attendance_type' => $request->attendance_type,
         ]);
 
-        return redirect()->route('companies.show', 1)->with('success', 'Company updated successfully');
+        return redirect()->route('school.show', $school->id)->with('success', 'Sekolah berhasil diperbarui.');
     }
 }

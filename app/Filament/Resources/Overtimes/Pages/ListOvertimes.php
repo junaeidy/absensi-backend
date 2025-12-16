@@ -72,7 +72,7 @@ class ListOvertimes extends ListRecords
             $query = $this->getFilteredTableQuery();
             $overtimes = $query->with(['user'])->get();
 
-            $csvData = "No,Nama Karyawan,Tanggal,Jam Mulai,Jam Selesai,Alasan,Status,Catatan\n";
+            $csvData = "No,Nama Guru/Staff,Tanggal,Jam Mulai,Jam Selesai,Alasan,Status,Catatan\n";
 
             foreach ($overtimes as $index => $overtime) {
                 $startTime = $overtime->start_time ?: '-';

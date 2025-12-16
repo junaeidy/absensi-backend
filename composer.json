@@ -1,8 +1,8 @@
 {
-    "name": "jagohris/jagohris",
+    "name": "Sekolahin/Sekolahin",
     "type": "project",
-    "description": "JagoHRIS - Smart Human Resources Information System",
-    "keywords": ["hris", "hr", "laravel", "attendance", "payroll"],
+    "description": "Sekolahin - Aplikasi manajemen sekolah yang membantu guru dan sekolah mengelola jadwal, absensi, dan nilai dalam satu sistem yang sederhana dan mudah digunakan.",
+    "keywords": ["aplikasi manajemen sekolah", "sistem informasi sekolah", "aplikasi sekolah", "sistem akademik sekolah", "aplikasi administrasi sekolah"],
     "license": "MIT",
     "require": {
         "php": "^8.3",

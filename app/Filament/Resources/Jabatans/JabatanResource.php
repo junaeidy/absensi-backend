@@ -24,7 +24,7 @@ class JabatanResource extends Resource
 
     protected static ?int $navigationSort = 50;
 
-    protected static ?string $navigationLabel = 'Positions';
+    protected static ?string $navigationLabel = 'Jabatan';
 
     public static function form(Schema $schema): Schema
     {

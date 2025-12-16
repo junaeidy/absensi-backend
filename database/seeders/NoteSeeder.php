@@ -20,18 +20,18 @@ class NoteSeeder extends Seeder
         $notes = [
             [
                 'user_id' => $adminUser->id,
-                'title' => 'Welcome to the System',
-                'note' => 'This is a welcome note for all new users. Please read the handbook and follow company policies.',
+                'title' => 'Selamat datang di Sistem Kami',
+                'note' => 'Ini adalah catatan sambutan untuk semua pengguna baru. Harap baca buku panduan dan ikuti kebijakan perusahaan.',
             ],
             [
                 'user_id' => $adminUser->id,
-                'title' => 'Meeting Schedule',
-                'note' => 'Monthly team meeting is scheduled for every first Monday of the month at 10:00 AM.',
+                'title' => 'Jadwal Rapat',
+                'note' => 'Rapat guru bulanan dijadwalkan setiap Senin pertama setiap bulan pukul 10:00 WIB.',
             ],
             [
                 'user_id' => $adminUser->id,
-                'title' => 'Holiday Notice',
-                'note' => 'Please note that the office will be closed on national holidays. Check the holiday calendar for details.',
+                'title' => 'Pemberitahuan Libur',
+                'note' => 'Harap dicatat bahwa sekolah akan tutup pada hari libur nasional. Periksa kalender libur untuk detailnya.',
             ],
         ];
 
