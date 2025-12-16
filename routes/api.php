@@ -86,3 +86,6 @@ Route::get('/leaves/{id}', [App\Http\Controllers\Api\LeaveController::class, 'sh
 Route::post('/leaves', [App\Http\Controllers\Api\LeaveController::class, 'store'])->middleware('auth:sanctum');
 Route::put('/leaves/{id}', [App\Http\Controllers\Api\LeaveController::class, 'update'])->middleware('auth:sanctum');
 Route::post('/leaves/{id}/cancel', [App\Http\Controllers\Api\LeaveController::class, 'cancel'])->middleware('auth:sanctum');
+
+// admin: mark absent users manually (for testing or manual execution)
+Route::post('/admin/mark-absent', [App\Http\Controllers\Api\AttendanceController::class, 'markAbsentUsers'])->middleware('auth:sanctum');

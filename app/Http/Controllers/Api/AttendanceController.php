@@ -143,10 +143,13 @@ class AttendanceController extends Controller
             ->first();
 
         $isCheckout = $attendance ? $attendance->time_out : false;
+        $isAbsent = $attendance && $attendance->status === 'absent';
 
         return response([
-            'checkedin' => $attendance ? true : false,
+            'checkedin' => $attendance && !$isAbsent ? true : false,
             'checkedout' => $isCheckout ? true : false,
+            'is_absent' => $isAbsent,
+            'attendance' => $attendance,
         ], 200);
     }
 
@@ -212,5 +215,104 @@ class AttendanceController extends Controller
         }
 
         return false;
+    }
+
+    /**
+     * Manually trigger marking absent users for a specific date
+     * This endpoint can be used by admin for testing or manual execution
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function markAbsentUsers(Request $request)
+    {
+        $currentUser = $request->user();
+        
+        // Only allow admin/superadmin to execute this
+        if (!in_array($currentUser->role, ['admin', 'superadmin'])) {
+            return response([
+                'message' => 'Unauthorized. Only admin can mark absent users.',
+            ], 403);
+        }
+
+        $request->validate([
+            'date' => 'nullable|date_format:Y-m-d',
+        ]);
+
+        $dateString = $request->input('date', now()->toDateString());
+        $date = Carbon::parse($dateString);
+
+        // Check if the date is a weekend or holiday
+        $isWeekend = WorkdayCalculator::isWeekend($date);
+        $isHoliday = WorkdayCalculator::isHoliday($date);
+
+        // Get all active users
+        $allUsers = \App\Models\User::all();
+
+        // Get users who already have attendance records for this date
+        $usersWithAttendance = Attendance::whereDate('date', $date->toDateString())
+            ->pluck('user_id')
+            ->toArray();
+
+        // Get users who are on approved leave for this date
+        $usersOnLeave = Leave::where('status', 'approved')
+            ->whereDate('start_date', '<=', $date->toDateString())
+            ->whereDate('end_date', '>=', $date->toDateString())
+            ->pluck('employee_id')
+            ->toArray();
+
+        $markedCount = 0;
+        $skippedCount = 0;
+        $onLeaveCount = 0;
+        $markedUsers = [];
+
+        foreach ($allUsers as $user) {
+            // Skip if user already has attendance record
+            if (in_array($user->id, $usersWithAttendance)) {
+                $skippedCount++;
+                continue;
+            }
+
+            // Skip if user is on approved leave
+            if (in_array($user->id, $usersOnLeave)) {
+                $onLeaveCount++;
+                continue;
+            }
+
+            // Create absent record
+            $attendance = new Attendance();
+            $attendance->user_id = $user->id;
+            $attendance->shift_id = $user->shift_kerja_id;
+            $attendance->date = $date->toDateString();
+            $attendance->time_in = null;
+            $attendance->time_out = null;
+            $attendance->latlon_in = null;
+            $attendance->latlon_out = null;
+            $attendance->status = 'absent';
+            $attendance->is_weekend = $isWeekend;
+            $attendance->is_holiday = $isHoliday;
+            $attendance->holiday_work = false;
+            $attendance->late_minutes = 0;
+            $attendance->early_leave_minutes = 0;
+            $attendance->save();
+
+            $markedCount++;
+            $markedUsers[] = [
+                'id' => $user->id,
+                'name' => $user->name,
+            ];
+        }
+
+        return response([
+            'message' => 'Absent marking completed',
+            'date' => $date->toDateString(),
+            'summary' => [
+                'total_users' => $allUsers->count(),
+                'already_checked_in' => $skippedCount,
+                'on_leave' => $onLeaveCount,
+                'marked_as_absent' => $markedCount,
+            ],
+            'marked_users' => $markedUsers,
+        ], 200);
     }
 }
