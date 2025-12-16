@@ -19,12 +19,12 @@ class AttendancesTable
         return $table
             ->columns([
                 TextColumn::make('user.name')
-                    ->label('User')
+                    ->label('Nama Guru/Staff')
                     ->searchable()
                     ->sortable()
                     ->weight('medium'),
                 TextColumn::make('date')
-                    ->label('Date')
+                    ->label('Tanggal')
                     ->date('d M Y')
                     ->sortable()
                     ->searchable(),
@@ -45,9 +45,9 @@ class AttendancesTable
                     ->label('Status')
                     ->badge()
                     ->formatStateUsing(fn (string $state): string => match ($state) {
-                        'on_time' => 'On Time',
-                        'late' => 'Late',
-                        'absent' => 'Absent',
+                        'on_time' => 'Tepat Waktu',
+                        'late' => 'Terlambat',
+                        'absent' => 'Absen',
                         default => ucfirst($state),
                     })
                     ->color(fn (string $state): string => match ($state) {
@@ -58,7 +58,7 @@ class AttendancesTable
                     })
                     ->sortable(),
                 TextColumn::make('total_hours')
-                    ->label('Total Hours')
+                    ->label('Total Jam Kerja')
                     ->getStateUsing(function ($record) {
                         if (! $record->time_out) {
                             return '-';
@@ -73,18 +73,18 @@ class AttendancesTable
                     ->color('info')
                     ->icon('heroicon-o-clock'),
                 TextColumn::make('shift.name')
-                    ->label('Shift')
+                    ->label('Nama Shift')
                     ->badge()
                     ->color('primary')
-                    ->placeholder('No Shift')
+                    ->placeholder('Tidak ada shift')
                     ->sortable()
                     ->searchable(),
                 TextColumn::make('latlon_in')
-                    ->label('Check In Location')
+                    ->label('Lokasi Check In')
                     ->limit(20)
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('latlon_out')
-                    ->label('Check Out Location')
+                    ->label('Lokasi Check Out')
                     ->limit(20)
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
@@ -121,15 +121,15 @@ class AttendancesTable
                         return $indicators;
                     }),
                 SelectFilter::make('user_id')
-                    ->label('User')
+                    ->label('Guru/Staff')
                     ->relationship('user', 'name')
                     ->searchable()
                     ->preload(),
                 SelectFilter::make('status')
                     ->options([
-                        'on_time' => 'On Time',
-                        'late' => 'Late',
-                        'absent' => 'Absent',
+                        'on_time' => 'Tepat Waktu',
+                        'late' => 'Terlambat',
+                        'absent' => 'Absen',
                     ])
                     ->multiple(),
                 SelectFilter::make('shift_id')
@@ -160,7 +160,7 @@ class AttendancesTable
                             ->with(['user', 'shift'])
                             ->get();
 
-                        $csv = "User,Date,Check In,Check Out,Status,Total Hours,Shift\n";
+                        $csv = "Nama Guru/Staff,Tanggal,Jam Mulai,Jam Selesai,Status,Total Jam Kerja,Nama Shift\n";
                         foreach ($attendances as $attendance) {
                             $totalHours = '-';
                             if ($attendance->time_out) {

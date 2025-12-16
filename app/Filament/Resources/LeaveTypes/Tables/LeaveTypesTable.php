@@ -16,17 +16,17 @@ class LeaveTypesTable
         return $table
             ->columns([
                 TextColumn::make('name')
-                    ->label('Name')
+                    ->label('Nama Jenis Cuti')
                     ->sortable()
                     ->searchable(),
 
                 TextColumn::make('quota_days')
-                    ->label('Quota Days')
+                    ->label('Kuota Hari Cuti')
                     ->sortable()
                     ->formatStateUsing(fn ($state) => $state == 0 ? 'Unlimited' : $state),
 
                 IconColumn::make('is_paid')
-                    ->label('Is Paid')
+                    ->label('Berbayar')
                     ->boolean()
                     ->trueIcon('heroicon-o-check-circle')
                     ->falseIcon('heroicon-o-x-circle')
@@ -34,7 +34,7 @@ class LeaveTypesTable
                     ->falseColor('danger'),
 
                 TextColumn::make('created_at')
-                    ->label('Created')
+                    ->label('Dibuat Pada')
                     ->dateTime('d/m/Y H:i')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

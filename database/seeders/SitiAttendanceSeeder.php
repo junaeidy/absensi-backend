@@ -15,10 +15,10 @@ class SitiAttendanceSeeder extends Seeder
      */
     public function run(): void
     {
-        $siti = User::where('email', 'siti@company.com')->first();
+        $siti = User::where('email', 'siti@sekolah.com')->first();
 
         if (! $siti) {
-            $this->command->warn('User siti@company.com not found');
+            $this->command->warn('User siti@sekolah.com not found');
 
             return;
         }

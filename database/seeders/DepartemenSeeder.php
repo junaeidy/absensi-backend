@@ -12,13 +12,14 @@ class DepartemenSeeder extends Seeder
     public function run(): void
     {
         $departemens = [
-            ['name' => 'Teknologi Informasi', 'description' => 'Departemen yang mengelola teknologi dan sistem informasi'],
-            ['name' => 'Human Resources', 'description' => 'Departemen yang mengelola sumber daya manusia'],
-            ['name' => 'Marketing', 'description' => 'Departemen yang mengelola pemasaran dan promosi'],
-            ['name' => 'Sales', 'description' => 'Departemen yang mengelola penjualan'],
-            ['name' => 'Finance', 'description' => 'Departemen yang mengelola keuangan'],
-            ['name' => 'Operations', 'description' => 'Departemen yang mengelola operasional harian'],
-            ['name' => 'Administration', 'description' => 'Departemen yang mengelola administrasi umum'],
+            ['name' => 'Kepala Sekolah', 'description' => 'Departemen pimpinan sekolah'],
+            ['name' => 'Kurikulum', 'description' => 'Departemen pengembangan kurikulum dan pembelajaran'],
+            ['name' => 'Kesiswaan', 'description' => 'Departemen pengelolaan siswa dan kegiatan ekstrakurikuler'],
+            ['name' => 'Tata Usaha', 'description' => 'Departemen administrasi dan tata usaha sekolah'],
+            ['name' => 'Keuangan', 'description' => 'Departemen pengelolaan keuangan sekolah'],
+            ['name' => 'Perpustakaan', 'description' => 'Departemen pengelolaan perpustakaan dan literasi'],
+            ['name' => 'Bimbingan Konseling', 'description' => 'Departemen bimbingan dan konseling siswa'],
+            ['name' => 'Teknologi Informasi', 'description' => 'Departemen pengelolaan sistem dan teknologi informasi'],
         ];
 
         foreach ($departemens as $departemen) {
@@ -28,6 +29,6 @@ class DepartemenSeeder extends Seeder
             );
         }
 
-        $this->command->info('7 departemens created/updated successfully.');
+        $this->command->info('8 departemens created/updated successfully.');
     }
 }

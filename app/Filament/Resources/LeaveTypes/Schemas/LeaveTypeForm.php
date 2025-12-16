@@ -16,22 +16,22 @@ class LeaveTypeForm
                 Section::make('Leave Type Information')
                     ->schema([
                         TextInput::make('name')
-                            ->label('Name')
+                            ->label('Nama Jenis Cuti')
                             ->required()
                             ->unique(ignoreRecord: true)
                             ->maxLength(255),
 
                         TextInput::make('quota_days')
-                            ->label('Quota Days')
+                            ->label('Kuota Hari Cuti')
                             ->required()
                             ->numeric()
                             ->minValue(0)
-                            ->helperText('Enter the number of days allowed per year. Use 0 for unlimited.'),
+                            ->helperText('Masukkan jumlah hari cuti yang diperbolehkan per tahun. Gunakan 0 untuk tanpa batas.'),
 
                         Toggle::make('is_paid')
-                            ->label('Is Paid Leave')
+                            ->label('Berbayar')
                             ->default(true)
-                            ->helperText('Check if this leave type is paid'),
+                            ->helperText('Tandai jika jenis cuti ini berbayar'),
                     ])
                     ->columns(2),
             ]);

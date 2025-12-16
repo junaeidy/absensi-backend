@@ -41,7 +41,7 @@ class HolidayForm
                             ->required()
                             ->options([
                                 Holiday::TYPE_NATIONAL => 'National',
-                                Holiday::TYPE_COMPANY => 'Company',
+                                Holiday::TYPE_COMPANY => 'School',
                                 Holiday::TYPE_WEEKEND => 'Weekend',
                             ])
                             ->default(Holiday::TYPE_NATIONAL),

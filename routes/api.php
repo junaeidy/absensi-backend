@@ -39,8 +39,9 @@ Route::post('/logout', [App\Http\Controllers\Api\AuthController::class, 'logout'
 // me
 Route::get('/me', [App\Http\Controllers\Api\AuthController::class, 'me'])->middleware('auth:sanctum');
 
-// company
-Route::get('/company', [App\Http\Controllers\Api\CompanyController::class, 'show'])->middleware('auth:sanctum');
+// school (previously company)
+Route::get('/school', [App\Http\Controllers\Api\SchoolController::class, 'show'])->middleware('auth:sanctum');
+Route::get('/company', [App\Http\Controllers\Api\SchoolController::class, 'show'])->middleware('auth:sanctum'); // Backward compatibility
 
 // checkin
 Route::post('/checkin', [App\Http\Controllers\Api\AttendanceController::class, 'checkin'])->middleware('auth:sanctum');

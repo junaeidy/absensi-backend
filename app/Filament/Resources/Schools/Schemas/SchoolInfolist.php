@@ -1,38 +1,38 @@
 <?php
 
-namespace App\Filament\Resources\Companies\Schemas;
+namespace App\Filament\Resources\Schools\Schemas;
 
 use App\Models\ShiftKerja;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 
-class CompanyInfolist
+class SchoolInfolist
 {
     public static function configure(Schema $schema): Schema
     {
         return $schema
             ->components([
-                Section::make('Company Information')
+                Section::make('Informasi Sekolah')
                     ->schema([
                         TextEntry::make('name')
-                            ->label('Company Name')
+                            ->label('Nama Sekolah')
                             ->weight('bold')
                             ->size('lg'),
 
                         TextEntry::make('email')
-                            ->label('Email Address')
+                            ->label('Alamat Email')
                             ->icon('heroicon-o-envelope')
                             ->copyable(),
 
                         TextEntry::make('address')
-                            ->label('Address')
+                            ->label('Alamat Sekolah')
                             ->icon('heroicon-o-map-pin')
                             ->columnSpanFull(),
                     ])
                     ->columns(2),
 
-                Section::make('Location Settings')
+                Section::make('Pengaturan Lokasi')
                     ->schema([
                         TextEntry::make('latitude')
                             ->label('Latitude')
@@ -45,13 +45,13 @@ class CompanyInfolist
                             ->copyable(),
 
                         TextEntry::make('radius_km')
-                            ->label('Check-in Radius')
+                            ->label('Radius Check-in')
                             ->suffix(' km')
                             ->badge()
                             ->color('info'),
 
                         TextEntry::make('attendance_type')
-                            ->label('Attendance Method')
+                            ->label('Metode Absensi')
                             ->badge()
                             ->formatStateUsing(fn (string $state): string => match ($state) {
                                 'location_based_only' => 'Location Based (GPS)',
@@ -68,8 +68,8 @@ class CompanyInfolist
                     ])
                     ->columns(4),
 
-                Section::make('Available Work Shifts')
-                    ->description('Configured shifts for this company')
+                Section::make('Shift Kerja Tersedia')
+                    ->description('Konfigurasi shift kerja untuk sekolah ini')
                     ->schema([
                         TextEntry::make('shifts')
                             ->label('')
@@ -79,11 +79,11 @@ class CompanyInfolist
                                     ->get()
                                     ->map(function ($shift) {
                                         $crossDay = $shift->is_cross_day ? ' 🌙' : '';
-                                        $grace = $shift->grace_period_minutes.' min grace';
+                                        $grace = $shift->grace_period_minutes.' menit toleransi';
                                         $employees = $shift->users()->count();
 
                                         return sprintf(
-                                            '%s: %s - %s%s (%s, %d employees)',
+                                            '%s: %s - %s%s (%s, %d staff)',
                                             $shift->name,
                                             $shift->start_time->format('H:i'),
                                             $shift->end_time->format('H:i'),
@@ -96,7 +96,7 @@ class CompanyInfolist
                             })
                             ->listWithLineBreaks()
                             ->bulleted()
-                            ->placeholder('No shifts configured'),
+                            ->placeholder('Belum ada shift yang dikonfigurasi'),
                     ])
                     ->collapsible(),
             ]);

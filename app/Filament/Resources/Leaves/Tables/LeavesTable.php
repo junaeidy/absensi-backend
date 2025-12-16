@@ -30,37 +30,37 @@ class LeavesTable
         return $table
             ->columns([
                 TextColumn::make('employee.name')
-                    ->label('Employee')
+                    ->label('Guru/Staff')
                     ->sortable()
                     ->searchable(),
 
                 TextColumn::make('leaveType.name')
-                    ->label('Leave Type')
+                    ->label('Jenis Cuti')
                     ->sortable()
                     ->searchable(),
 
                 TextColumn::make('start_date')
-                    ->label('Start Date')
+                    ->label('Tanggal Mulai')
                     ->date('d/m/Y')
                     ->sortable(),
 
                 TextColumn::make('end_date')
-                    ->label('End Date')
+                    ->label('Tanggal Selesai')
                     ->date('d/m/Y')
                     ->sortable(),
 
                 TextColumn::make('total_days')
-                    ->label('Total Days')
+                    ->label('Total Hari')
                     ->sortable(),
 
                 IconColumn::make('attachment_url')
-                    ->label('Attachment')
+                    ->label('Lampiran')
                     ->icon(fn ($record) => $record->attachment_url ? 'heroicon-o-paper-clip' : null)
                     ->color('primary')
                     ->url(fn ($record) => $record->attachment_url ? Storage::url($record->attachment_url) : null)
                     ->openUrlInNewTab()
                     ->alignCenter()
-                    ->tooltip(fn ($record) => $record->attachment_url ? 'View Attachment' : 'No Attachment'),
+                    ->tooltip(fn ($record) => $record->attachment_url ? 'Lihat Lampiran' : 'Tidak Ada Lampiran'),
 
                 BadgeColumn::make('status')
                     ->label('Status')
@@ -72,31 +72,31 @@ class LeavesTable
                     ->sortable(),
 
                 TextColumn::make('approver.name')
-                    ->label('Approved By')
+                    ->label('Disetujui Oleh')
                     ->sortable()
                     ->searchable()
                     ->placeholder('-'),
 
                 TextColumn::make('approved_at')
-                    ->label('Approved At')
+                    ->label('Tanggal Disetujui')
                     ->dateTime('d/m/Y H:i')
                     ->sortable()
                     ->placeholder('-'),
 
                 TextColumn::make('created_at')
-                    ->label('Created')
+                    ->label('Dibuat Pada')
                     ->dateTime('d/m/Y H:i')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 SelectFilter::make('employee_id')
-                    ->label('Employee')
+                    ->label('Guru/Staff')
                     ->relationship('employee', 'name')
                     ->searchable(),
 
                 SelectFilter::make('leave_type_id')
-                    ->label('Leave Type')
+                    ->label('Jenis Cuti')
                     ->relationship('leaveType', 'name')
                     ->searchable(),
 
@@ -109,12 +109,12 @@ class LeavesTable
                     ]),
 
                 Filter::make('date_range')
-                    ->label('Date Range')
+                    ->label('Tanggal Cuti')
                     ->form([
                         DatePicker::make('start_date')
-                            ->label('From'),
+                            ->label('Dari'),
                         DatePicker::make('end_date')
-                            ->label('To'),
+                            ->label('Sampai'),
                     ])
                     ->query(function (Builder $query, array $data): Builder {
                         return $query
@@ -130,20 +130,20 @@ class LeavesTable
             ])
             ->recordActions([
                 ViewAction::make()
-                    ->label('View'),
+                    ->label('Lihat'),
 
                 EditAction::make()
                     ->label('Edit')
                     ->visible(fn (Leave $record) => $record->status === 'pending'),
 
                 Action::make('approve')
-                    ->label('Approve')
+                    ->label('Setujui')
                     ->color('success')
                     ->icon('heroicon-o-check')
                     ->visible(fn (Leave $record) => $record->status === 'pending' && (auth()->user()->role === 'admin' || auth()->user()->role === 'hr'))
                     ->requiresConfirmation()
-                    ->modalHeading('Approve Leave Request')
-                    ->modalDescription(fn ($record) => 'Employee: '.$record->employee->name."\nLeave Type: ".$record->leaveType->name."\nDates: ".$record->start_date->format('d/m/Y').' - '.$record->end_date->format('d/m/Y'))
+                    ->modalHeading('Setujui Permintaan Cuti')
+                    ->modalDescription(fn ($record) => 'Guru/Staff: '.$record->employee->name."\nJenis Cuti: ".$record->leaveType->name."\nTanggal: ".$record->start_date->format('d/m/Y').' - '.$record->end_date->format('d/m/Y'))
                     ->action(function (Leave $record) {
                         try {
                             DB::beginTransaction();
@@ -165,9 +165,9 @@ class LeavesTable
                                 DB::rollBack();
 
                                 \Filament\Notifications\Notification::make()
-                                    ->title('Cannot approve leave request')
+                                    ->title('Tidak dapat menyetujui permintaan cuti')
                                     ->danger()
-                                    ->body('Leave balance not found for this employee and leave type.')
+                                    ->body('Saldo cuti tidak ditemukan untuk guru/staff dan jenis cuti ini.')
                                     ->send();
 
                                 return;
@@ -178,9 +178,9 @@ class LeavesTable
                                 DB::rollBack();
 
                                 \Filament\Notifications\Notification::make()
-                                    ->title('Cannot approve leave request')
+                                    ->title('Tidak dapat menyetujui permintaan cuti')
                                     ->danger()
-                                    ->body("Insufficient leave balance. Required: {$totalDays} days, Available: {$leaveBalance->remaining_days} days.")
+                                    ->body("Saldo cuti tidak mencukupi. Dibutuhkan: {$totalDays} hari, Tersedia: {$leaveBalance->remaining_days} hari.")
                                     ->send();
 
                                 return;
@@ -202,14 +202,14 @@ class LeavesTable
                             DB::commit();
 
                             \Filament\Notifications\Notification::make()
-                                ->title('Leave request approved successfully')
+                                ->title('Permintaan cuti disetujui')
                                 ->success()
                                 ->send();
                         } catch (\Exception $e) {
                             DB::rollBack();
 
                             \Filament\Notifications\Notification::make()
-                                ->title('Failed to approve leave request')
+                                ->title('Tidak dapat menyetujui permintaan cuti')
                                 ->danger()
                                 ->body($e->getMessage())
                                 ->send();
@@ -217,18 +217,18 @@ class LeavesTable
                     }),
 
                 Action::make('reject')
-                    ->label('Reject')
+                    ->label('Tolak')
                     ->color('danger')
                     ->icon('heroicon-o-x-circle')
                     ->visible(fn (Leave $record) => $record->status === 'pending' && (auth()->user()->role === 'admin' || auth()->user()->role === 'hr'))
                     ->form([
                         Textarea::make('notes')
-                            ->label('Rejection Notes')
+                            ->label('Catatan Penolakan')
                             ->rows(3)
                             ->required(),
                     ])
-                    ->modalHeading('Reject Leave Request')
-                    ->modalDescription(fn ($record) => 'Employee: '.$record->employee->name."\nLeave Type: ".$record->leaveType->name)
+                    ->modalHeading('Tolak Permintaan Cuti')
+                    ->modalDescription(fn ($record) => 'Guru/Staff: '.$record->employee->name."\nJenis Cuti: ".$record->leaveType->name)
                     ->action(function (Leave $record, array $data) {
                         $record->update([
                             'status' => 'rejected',
@@ -238,7 +238,7 @@ class LeavesTable
                         ]);
 
                         \Filament\Notifications\Notification::make()
-                            ->title('Leave request rejected')
+                            ->title('Permintaan cuti ditolak')
                             ->success()
                             ->send();
                     }),

@@ -20,7 +20,7 @@ class OvertimesTable
         return $table
             ->columns([
                 TextColumn::make('user.name')
-                    ->label('Karyawan')
+                    ->label('Guru/Staff')
                     ->searchable()
                     ->sortable(),
 
@@ -106,7 +106,7 @@ class OvertimesTable
                     ]),
 
                 SelectFilter::make('user_id')
-                    ->label('Karyawan')
+                    ->label('Guru/Staff')
                     ->relationship('user', 'name')
                     ->searchable()
                     ->preload(),

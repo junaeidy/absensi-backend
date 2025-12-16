@@ -16,10 +16,11 @@ class UserForm
             ->columns(2)
             ->components([
                 TextInput::make('name')
+                    ->label('Nama Lengkap')
                     ->required()
                     ->maxLength(255),
                 TextInput::make('email')
-                    ->label('Email address')
+                    ->label('Alamat Email')
                     ->email()
                     ->required()
                     ->unique(ignoreRecord: true)
@@ -35,34 +36,37 @@ class UserForm
                 Select::make('role')
                     ->options([
                         'admin' => 'Admin',
-                        'manager' => 'Manager',
-                        'employee' => 'Employee',
+                        'kepala_sekolah' => 'Kepala Sekolah',
+                        'guru' => 'Guru',
+                        'staff_keuangan' => 'Staff Keuangan',
+                        'staff_perpustakaan' => 'Staff Perpustakaan',
+                        'bk' => 'BK / Konselor',
                     ])
                     ->required()
-                    ->default('employee'),
+                    ->default('guru'),
                 Select::make('jabatan_id')
                     ->label('Jabatan')
                     ->relationship('jabatan', 'name')
                     ->required()
                     ->searchable()
                     ->preload()
-                    ->helperText('Pilih 1 jabatan untuk karyawan'),
+                    ->helperText('Pilih 1 jabatan untuk guru/staff'),
                 Select::make('departemen_id')
                     ->label('Departemen')
                     ->relationship('departemen', 'name')
                     ->required()
                     ->searchable()
                     ->preload()
-                    ->helperText('Pilih 1 departemen untuk karyawan'),
+                    ->helperText('Pilih 1 departemen untuk guru/staff'),
                 Select::make('shift_kerja_id')
                     ->label('Shift Kerja')
                     ->relationship('shiftKerja', 'name')
                     ->required()
                     ->searchable()
                     ->preload()
-                    ->helperText('Pilih 1 shift kerja untuk karyawan'),
+                    ->helperText('Pilih 1 shift kerja untuk guru/staff'),
                 FileUpload::make('image_url')
-                    ->label('Avatar')
+                    ->label('Foto')
                     ->image()
                     ->imageEditor()
                     ->directory('avatars')

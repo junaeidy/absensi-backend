@@ -41,16 +41,16 @@ class Login extends BaseLogin
 
     public function getHeading(): string|Htmlable
     {
-        return 'Sign in to JagoHRIS';
+        return 'Masuk ke Sekolahin';
     }
 
     public function getSubheading(): string|Htmlable|null
     {
         if (app()->environment(['local', 'development'])) {
-            return 'Development mode: Login credentials are pre-filled';
+            return 'Mode Development: Kredensial login sudah terisi otomatis';
         }
 
-        return 'Welcome back! Please sign in to your account.';
+        return 'Selamat datang! Silakan masuk ke akun Anda.';
     }
 
     public function authenticate(): ?LoginResponse
@@ -107,11 +107,11 @@ class Login extends BaseLogin
             }
         }
 
-        if (($user instanceof FilamentUser) && ! in_array($user->role, ['admin', 'manager'], true)) {
+        if (($user instanceof FilamentUser) && ! in_array($user->role, ['admin', 'kepala_sekolah'], true)) {
             $this->fireFailedEvent($authGuard, $user, $credentials);
 
             throw ValidationException::withMessages([
-                'email' => 'Hanya admin atau manager yang dapat mengakses dashboard.',
+                'email' => 'Hanya admin atau kepala sekolah yang dapat mengakses dashboard.',
             ]);
         }
 

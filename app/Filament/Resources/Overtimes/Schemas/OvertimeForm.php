@@ -20,7 +20,7 @@ class OvertimeForm
                 Section::make('Informasi Lembur')
                     ->schema([
                         Select::make('user_id')
-                            ->label('Karyawan')
+                            ->label('Guru/Staff')
                             ->relationship('user', 'name')
                             ->options(User::all()->pluck('name', 'id'))
                             ->searchable()

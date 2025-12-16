@@ -22,12 +22,12 @@ class AuthController extends Controller
 
         // check user exist
         if (! $user) {
-            return response(['message' => 'Invalid credentials'], 401);
+            return response(['message' => 'Email atau password salah'], 401);
         }
 
         // check password
         if (! Hash::check($loginData['password'], $user->password)) {
-            return response(['message' => 'Invalid credentials'], 401);
+            return response(['message' => 'Email atau password salah'], 401);
         }
 
         $token = $user->createToken('auth_token')->plainTextToken;
@@ -67,7 +67,7 @@ class AuthController extends Controller
     {
         $request->user()->currentAccessToken()->delete();
 
-        return response(['message' => 'Logged out'], 200);
+        return response(['message' => 'Berhasil logout.'], 200);
     }
 
     // update image profile & face_embedding
@@ -89,7 +89,7 @@ class AuthController extends Controller
         $user->save();
 
         return response([
-            'message' => 'Profile updated',
+            'message' => 'Profil berhasil diperbarui.',
             'user' => new UserResource($user),
         ], 200);
     }
@@ -106,7 +106,7 @@ class AuthController extends Controller
         $user->save();
 
         return response([
-            'message' => 'FCM token updated',
+            'message' => 'FCM token berhasil diperbarui.',
         ], 200);
     }
 

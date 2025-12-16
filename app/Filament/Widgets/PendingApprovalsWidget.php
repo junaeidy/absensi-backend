@@ -9,7 +9,7 @@ use Filament\Widgets\TableWidget as BaseWidget;
 
 class PendingApprovalsWidget extends BaseWidget
 {
-    protected static ?string $heading = 'Leave Menunggu Persetujuan';
+    protected static ?string $heading = 'Cuti Menunggu Persetujuan';
 
     protected int|string|array $columnSpan = 'full';
 
@@ -26,7 +26,7 @@ class PendingApprovalsWidget extends BaseWidget
             )
             ->columns([
                 TextColumn::make('employee.name')
-                    ->label('Karyawan')
+                    ->label('Guru/Staff')
                     ->searchable(),
 
                 TextColumn::make('start_date')

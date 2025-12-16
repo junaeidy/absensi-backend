@@ -31,6 +31,6 @@ class NoteController extends Controller
         $note->note = $request->note;
         $note->save();
 
-        return response()->json(['message' => 'Note created successfully'], 201);
+        return response()->json(['message' => 'Catatan berhasil ditambahkan'], 201);
     }
 }

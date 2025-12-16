@@ -92,7 +92,7 @@ class HolidaysTable
                     ->label('Type')
                     ->options([
                         Holiday::TYPE_NATIONAL => 'National',
-                        Holiday::TYPE_COMPANY => 'Company',
+                        Holiday::TYPE_COMPANY => 'School',
                         Holiday::TYPE_WEEKEND => 'Weekend',
                     ]),
 
