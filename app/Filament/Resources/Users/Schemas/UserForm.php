@@ -38,6 +38,13 @@ class UserForm
                         TextInput::make('phone')
                             ->tel()
                             ->maxLength(20),
+                        Select::make('gender')
+                            ->label('Jenis Kelamin')
+                            ->options([
+                                'L' => 'Laki-laki',
+                                'P' => 'Perempuan',
+                            ])
+                            ->required(),
                         Select::make('role')
                             ->options([
                                 'admin' => 'Admin',

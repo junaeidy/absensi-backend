@@ -35,6 +35,12 @@ class DatabaseSeeder extends Seeder
             OvertimeSeeder::class,
             IndonesiaPublicHoliday2025Seeder::class,
             AttendanceSeeder::class,
+
+            // FASE 1 - Student Management System Seeders
+            AcademicYearSeeder::class,
+            GradeSeeder::class,
+            SubjectSeeder::class,
+            StudentSeeder::class,
         ]);
     }
 }

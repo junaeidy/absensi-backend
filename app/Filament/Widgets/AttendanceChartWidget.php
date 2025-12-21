@@ -8,7 +8,7 @@ use Filament\Widgets\ChartWidget;
 
 class AttendanceChartWidget extends ChartWidget
 {
-    protected ?string $heading = 'Grafik Absensi 7 Hari Terakhir';
+    protected ?string $heading = 'Grafik Kehadiran Guru & Staff (7 Hari Terakhir)';
 
     protected static ?int $sort = 2;
 
@@ -32,10 +32,10 @@ class AttendanceChartWidget extends ChartWidget
         return [
             'datasets' => [
                 [
-                    'label' => 'Jumlah Absensi',
+                    'label' => 'Guru & Staff Hadir',
                     'data' => $data,
-                    'backgroundColor' => '#f59e0b',
-                    'borderColor' => '#d97706',
+                    'backgroundColor' => '#10b981',
+                    'borderColor' => '#059669',
                 ],
             ],
             'labels' => $labels,

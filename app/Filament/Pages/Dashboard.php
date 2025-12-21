@@ -12,7 +12,7 @@ use Filament\Pages\Dashboard as BaseDashboard;
 
 class Dashboard extends BaseDashboard
 {
-    protected static ?string $title = 'Dashboard Absensi';
+    protected static ?string $title = 'Dashboard Sekolah';
 
     protected static ?int $navigationSort = 1;
 

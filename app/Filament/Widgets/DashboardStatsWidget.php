@@ -8,6 +8,10 @@ use App\Models\Jabatan;
 use App\Models\Leave;
 use App\Models\Overtime;
 use App\Models\ShiftKerja;
+use App\Models\Student;
+use App\Models\StudentParent;
+use App\Models\ClassModel;
+use App\Models\Subject;
 use App\Models\User;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
@@ -21,41 +25,55 @@ class DashboardStatsWidget extends BaseWidget
     protected function getStats(): array
     {
         return [
-            Stat::make('Total Guru & Staff', User::count())
-                ->description('Jumlah seluruh guru dan staff')
+            Stat::make('Total Siswa Aktif', Student::where('status', 'active')->count())
+                ->description('Siswa yang aktif saat ini')
+                ->descriptionIcon('heroicon-m-academic-cap')
+                ->color('success')
+                ->chart([7, 12, 15, 18, 22, 25, 28]),
+
+            Stat::make('Total Guru & Staff', User::where('role', '!=', 'siswa')->orWhereNull('role')->count())
+                ->description('Jumlah guru dan staff')
                 ->descriptionIcon('heroicon-m-users')
                 ->color('primary'),
 
-            Stat::make('Total Jabatan', Jabatan::count())
-                ->description('Jumlah jabatan tersedia')
-                ->descriptionIcon('heroicon-m-briefcase')
-                ->color('success'),
-
-            Stat::make('Total Departemen', Departemen::count())
-                ->description('Jumlah departemen tersedia')
-                ->descriptionIcon('heroicon-m-building-office')
+            Stat::make('Total Kelas', ClassModel::count())
+                ->description('Jumlah kelas tersedia')
+                ->descriptionIcon('heroicon-m-building-library')
                 ->color('info'),
 
-            Stat::make('Total Shift Kerja', ShiftKerja::count())
-                ->description('Jumlah shift kerja')
-                ->descriptionIcon('heroicon-m-clock')
+            Stat::make('Total Mata Pelajaran', Subject::where('is_active', true)->count())
+                ->description('Mata pelajaran aktif')
+                ->descriptionIcon('heroicon-m-book-open')
                 ->color('warning'),
 
-            Stat::make('Lembur Disetujui', $this->getApprovedOvertimeThisMonth())
-                ->description('Bulan ini yang disetujui')
-                ->descriptionIcon('heroicon-m-plus-circle')
+            Stat::make('Total Orang Tua', StudentParent::count())
+                ->description('Data orang tua/wali')
+                ->descriptionIcon('heroicon-m-user-group')
+                ->color('purple'),
+
+            Stat::make('Absensi Hari Ini', $this->getTodayAttendance())
+                ->description('Guru & staff yang hadir')
+                ->descriptionIcon('heroicon-m-check-badge')
                 ->color('success'),
 
-            Stat::make('Cuti Disetujui', $this->getApprovedLeaveThisMonth())
-                ->description('Bulan ini yang disetujui')
-                ->descriptionIcon('heroicon-m-check-circle')
-                ->color('success'),
-
-            Stat::make('Absensi Lengkap', $this->getCompleteAttendanceThisMonth())
-                ->description('Check-in & check-out bulan ini')
-                ->descriptionIcon('heroicon-m-calendar-days')
-                ->color('primary'),
+            Stat::make('Cuti Pending', $this->getPendingLeave())
+                ->description('Menunggu persetujuan')
+                ->descriptionIcon('heroicon-m-clock')
+                ->color('danger'),
         ];
+    }
+
+    private function getTodayAttendance(): int
+    {
+        return Attendance::whereNotNull('time_in')
+            ->whereDate('date', now()->toDateString())
+            ->count();
+    }
+
+    private function getPendingLeave(): int
+    {
+        return Leave::where('status', 'pending')
+            ->count();
     }
 
     private function getApprovedOvertimeThisMonth(): int

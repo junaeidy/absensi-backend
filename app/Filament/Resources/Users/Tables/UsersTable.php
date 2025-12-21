@@ -40,6 +40,21 @@ class UsersTable
                 TextColumn::make('phone')
                     ->label('Telepon')
                     ->searchable(),
+                TextColumn::make('gender')
+                    ->label('JK')
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'L' => 'primary',
+                        'P' => 'danger',
+                        default => 'gray',
+                    })
+                    ->formatStateUsing(fn (string $state): string => match ($state) {
+                        'L' => 'Laki-laki',
+                        'P' => 'Perempuan',
+                        default => '-',
+                    })
+                    ->sortable()
+                    ->placeholder('-'),
                 TextColumn::make('role')
                     ->badge()
                     ->formatStateUsing(fn (string $state): string => ucwords(str_replace('_', ' ', $state)))
