@@ -6,6 +6,7 @@ use App\Models\LeaveType;
 use App\Observers\LeaveTypeObserver;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\URL;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -27,5 +28,9 @@ class AppServiceProvider extends ServiceProvider
 
         // Register model observers
         LeaveType::observe(LeaveTypeObserver::class);
+
+        //  if (app()->environment('production', 'local')) {
+        //     URL::forceScheme('https');
+        // }
     }
 }

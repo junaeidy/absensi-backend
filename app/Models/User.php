@@ -24,6 +24,7 @@ class User extends Authenticatable implements FilamentUser
         'email',
         'password',
         'phone',
+        'gender',
         'role',
         'position',
         'department',
@@ -139,6 +140,12 @@ class User extends Authenticatable implements FilamentUser
     public function approvedLeaves()
     {
         return $this->hasMany(\App\Models\Leave::class, 'approved_by');
+    }
+
+    // Relasi ke Student (untuk siswa yang bisa login)
+    public function student()
+    {
+        return $this->hasOne(\App\Models\Student::class);
     }
 
     /**

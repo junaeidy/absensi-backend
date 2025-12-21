@@ -12,6 +12,7 @@ use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 use UnitEnum;
 
 class UserResource extends Resource
@@ -29,6 +30,13 @@ class UserResource extends Resource
     protected static ?string $modelLabel = 'Guru/Staff';
 
     protected static ?string $pluralModelLabel = 'Guru & Staff';
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            ->where('role', '!=', 'siswa')
+            ->orWhereNull('role');
+    }
 
     public static function form(Schema $schema): Schema
     {

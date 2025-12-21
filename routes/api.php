@@ -44,6 +44,44 @@ Route::post('/logout', [App\Http\Controllers\Api\AuthController::class, 'logout'
 // me
 Route::get('/me', [App\Http\Controllers\Api\AuthController::class, 'me'])->middleware('auth:sanctum');
 
+// ===============================
+// STUDENT AUTHENTICATION ROUTES
+// ===============================
+Route::prefix('student')->group(function () {
+    // Public routes (no auth)
+    Route::post('/login', [App\Http\Controllers\Api\StudentAuthController::class, 'login']);
+    
+    // Protected routes (requires auth)
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::post('/logout', [App\Http\Controllers\Api\StudentAuthController::class, 'logout']);
+        Route::get('/me', [App\Http\Controllers\Api\StudentAuthController::class, 'me']);
+        Route::post('/change-password', [App\Http\Controllers\Api\StudentAuthController::class, 'changePassword']);
+        
+        // Student Profile routes
+        Route::get('/profile', [App\Http\Controllers\Api\StudentProfileController::class, 'profile']);
+        Route::put('/profile', [App\Http\Controllers\Api\StudentProfileController::class, 'updateProfile']);
+        Route::post('/profile/photo', [App\Http\Controllers\Api\StudentProfileController::class, 'uploadPhoto']);
+        Route::get('/current-class', [App\Http\Controllers\Api\StudentProfileController::class, 'currentClass']);
+        Route::get('/class-history', [App\Http\Controllers\Api\StudentProfileController::class, 'classHistory']);
+        Route::get('/parents', [App\Http\Controllers\Api\StudentProfileController::class, 'parents']);
+        Route::get('/dashboard', [App\Http\Controllers\Api\StudentProfileController::class, 'dashboard']);
+    });
+});
+
+// ===============================
+// STUDENT MANAGEMENT ROUTES (Admin/Staff)
+// ===============================
+Route::middleware('auth:sanctum')->group(function () {
+    // Student CRUD (for admin/staff)
+    Route::get('/students', [App\Http\Controllers\Api\StudentController::class, 'index']);
+    Route::get('/students/{id}', [App\Http\Controllers\Api\StudentController::class, 'show']);
+    Route::post('/students', [App\Http\Controllers\Api\StudentController::class, 'store']);
+    Route::put('/students/{id}', [App\Http\Controllers\Api\StudentController::class, 'update']);
+    Route::delete('/students/{id}', [App\Http\Controllers\Api\StudentController::class, 'destroy']);
+    Route::get('/students/{id}/parents', [App\Http\Controllers\Api\StudentController::class, 'parents']);
+    Route::get('/students/{id}/classes', [App\Http\Controllers\Api\StudentController::class, 'classes']);
+});
+
 // school (previously company)
 Route::get('/school', [App\Http\Controllers\Api\SchoolController::class, 'show'])->middleware('auth:sanctum');
 Route::get('/company', [App\Http\Controllers\Api\SchoolController::class, 'show'])->middleware('auth:sanctum'); // Backward compatibility

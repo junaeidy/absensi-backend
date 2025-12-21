@@ -9,7 +9,7 @@ use Filament\Widgets\TableWidget as BaseWidget;
 
 class LatestAttendanceWidget extends BaseWidget
 {
-    protected static ?string $heading = 'Absensi Terbaru';
+    protected static ?string $heading = 'Absensi Guru & Staff Terbaru';
 
     protected int|string|array $columnSpan = 'full';
 
